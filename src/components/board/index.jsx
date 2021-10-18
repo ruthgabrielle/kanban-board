@@ -1,30 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Box from "@mui/material/Box";
 import { v4 as uuidv4 } from "uuid";
-
-const itemsTasks = [
-  { id: uuidv4(), content: "First Task" },
-  { id: uuidv4(), content: "Second Task" },
-  { id: uuidv4(), content: "Third Task" },
-  { id: uuidv4(), content: "Fourth Task" },
-  { id: uuidv4(), content: "Fifth Task" },
-];
-
-const columnsTasks = {
-  [uuidv4()]: {
-    name: "Todo",
-    items: itemsTasks,
-  },
-  [uuidv4()]: {
-    name: "Doing",
-    items: [],
-  },
-  [uuidv4()]: {
-    name: "Done",
-    items: [],
-  },
-};
+import { TaskContext } from "../../hooks/TaskContext";
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -63,7 +41,25 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-const KanbanBoard = () => {
+const Board = () => {
+  const { tasks } = useContext(TaskContext);
+  console.log(tasks);
+
+  const columnsTasks = {
+    [uuidv4()]: {
+      name: "Todo",
+      items: tasks,
+    },
+    [uuidv4()]: {
+      name: "Doing",
+      items: [],
+    },
+    [uuidv4()]: {
+      name: "Done",
+      items: [],
+    },
+  };
+
   const [columns, setColumns] = useState(columnsTasks);
 
   return (
@@ -153,4 +149,4 @@ const KanbanBoard = () => {
     </Box>
   );
 };
-export default KanbanBoard;
+export default Board;

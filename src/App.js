@@ -1,11 +1,12 @@
-import KanbanBoard from "./pages/board";
+import { TaskProvider } from "./hooks/TaskContext";
+import KanbanBoard from "./pages/kanbanBoard";
 
 function App() {
   return (
-    <div>
+    <TaskProvider>
       <h2> Kanban Board </h2>
       <KanbanBoard />
-    </div>
+    </TaskProvider>
   );
 }
 
