@@ -3,7 +3,7 @@ import { TaskContext } from "../hooks/TaskContext";
 
 export const TaskContentContext = createContext([]);
 
-export function InfoAgesProvider() {
+export function TaskContentProvider() {
     const { tasks } = useContext(TaskContext);
 
     return tasks

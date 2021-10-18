@@ -30,6 +30,7 @@ export function TaskProvider(props) {
       task
     ])
   }
+
   return (
     <TaskContext.Provider value={{ tasks, createTask }}>
       {props.children}

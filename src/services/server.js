@@ -18,6 +18,7 @@ export function makeServer({ environment = "development" } = {}) {
       });
     },
 
+
     routes() {
       this.namespace = "api";
 
