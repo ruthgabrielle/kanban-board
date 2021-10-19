@@ -7,15 +7,18 @@ export default createGlobalStyle`
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+
   }
   html, body, #root {
     height: 100%;
   }
   body {
     font: 14px 'Roboto', sans-serif;
-    background: #E1E8ED;
+    background-color: #E1E8ED;
     color: #333;
     -webkit-font-smoothing: antialiased !important;
+    background-image: linear-gradient(white, grey);
+
   }
   ul {
     list-style: none;

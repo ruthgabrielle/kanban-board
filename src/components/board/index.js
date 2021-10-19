@@ -77,11 +77,11 @@ export default function Board() {
                         ref={provided.innerRef}
                         style={{
                           background: snapshot.isDraggingOver
-                            ? "lightblue"
-                            : "lightgrey",
+                            ? "lightgrey"
+                            : "transparent",
                           padding: 4,
                           width: 250,
-                          minHeight: 500
+                          minHeight: 500,
                         }}
                       >
                         {column.cards.map((item, index) => {
@@ -105,10 +105,7 @@ export default function Board() {
                                       minHeight: "50px",
                                       boxShadow: '0 1px 4px 0 rgba(192, 208, 230, 0.8)',
                                       borderTop: ' 20px solid rgba(230, 236, 245, 0.4)',
-                                      backgroundColor: snapshot.isDragging
-                                        ? "#22465a"
-                                        : "#4d90b8",
-                                      color: "white",
+                                      backgroundColor: '#FFF',
                                       "&:hover": {
                                         backgroundColor: "#54A0C9",
                                         opacity: [0.9, 0.8, 0.7],
@@ -126,12 +123,12 @@ export default function Board() {
                           );
                         })}
                         {provided.placeholder}
+                        <Button >+ Adicionar novo cartão </Button>
                       </div>
                     );
                   }}
                 </Droppable>
                 <br />
-                <Button >+ Adicionar novo cartão </Button>
               </div>
             </div >
           );
