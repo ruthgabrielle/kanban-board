@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { loadLists } from "../../services/api";
+import InputContainer from "../input/inputContainer";
 import { BoardContainer, Button, Container, Content, Label, ListContainer } from "./styles";
 
 const lists = loadLists();
@@ -59,7 +60,7 @@ export default function Board() {
                   <h2>{column.title}</h2>
                 </header>
                 <Droppable droppableId={columnId} key={columnId}>
-                  {(provided, snapshot) => {
+                  {(provided) => {
                     return (
                       <ListContainer
                         {...provided.droppableProps}
@@ -73,7 +74,7 @@ export default function Board() {
                               draggableId={item.id}
                               index={index}
                             >
-                              {(provided, snapshot) => {
+                              {(provided) => {
                                 return (
                                   <Content
                                     ref={provided.innerRef}
@@ -92,7 +93,7 @@ export default function Board() {
                           );
                         })}
                         {provided.placeholder}
-                        <Button >+ Adicionar novo cartão </Button>
+                        <InputContainer />
                       </ListContainer>
                     );
                   }}
