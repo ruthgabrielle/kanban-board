@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import Box from "@mui/material/Box";
-import { v4 as uuidv4 } from "uuid";
-import { TaskContext } from "../../hooks/TaskContext";
+import { loadLists } from "../../services/api";
+import { Label, Button } from "./styles";
+
+const lists = loadLists();
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -11,79 +12,62 @@ const onDragEnd = (result, columns, setColumns) => {
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
+    const sourceItems = [...sourceColumn.cards];
+    const destItems = [...destColumn.cards];
     const [removed] = sourceItems.splice(source.index, 1);
     destItems.splice(destination.index, 0, removed);
     setColumns({
       ...columns,
       [source.droppableId]: {
         ...sourceColumn,
-        items: sourceItems,
+        cards: sourceItems,
       },
       [destination.droppableId]: {
         ...destColumn,
-        items: destItems,
+        cards: destItems,
       },
     });
   } else {
     const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
+    const copiedItems = [...column.cards];
     const [removed] = copiedItems.splice(source.index, 1);
     copiedItems.splice(destination.index, 0, removed);
     setColumns({
       ...columns,
       [source.droppableId]: {
         ...column,
-        items: copiedItems,
+        cards: copiedItems,
       },
     });
   }
 };
 
-const Board = () => {
-  const { tasks } = useContext(TaskContext);
-  console.log(tasks);
-
-  const columnsTasks = {
-    [uuidv4()]: {
-      name: "Todo",
-      items: tasks,
-    },
-    [uuidv4()]: {
-      name: "Doing",
-      items: [],
-    },
-    [uuidv4()]: {
-      name: "Done",
-      items: [],
-    },
-  };
-
-  const [columns, setColumns] = useState(columnsTasks);
+export default function Board() {
+  const [columns, setColumns] = useState(lists);
 
   return (
-    <Box
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "100%",
-      }}
+    <div style={{
+      display: 'flex',
+      padding: '30px 0',
+      justifyContent: 'center',
+      height: '100%'
+    }}
     >
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       >
         {Object.entries(columns).map(([columnId, column]) => {
           return (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-              key={columnId}
+            <div style={{
+              padding: ' 0 15px',
+              height: '100%',
+              flex: '0 0 320px'
+            }}
             >
-              <h2>{column.name}</h2>
+              <p style={{
+                fontWeight: '500',
+                lineHeight: ' 20px'
+              }}>{column.title}</p>
               <div style={{ margin: 8 }}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
@@ -97,10 +81,10 @@ const Board = () => {
                             : "lightgrey",
                           padding: 4,
                           width: 250,
-                          minHeight: 500,
+                          minHeight: 500
                         }}
                       >
-                        {column.items.map((item, index) => {
+                        {column.cards.map((item, index) => {
                           return (
                             <Draggable
                               key={item.id}
@@ -115,9 +99,12 @@ const Board = () => {
                                     {...provided.dragHandleProps}
                                     style={{
                                       userSelect: "none",
-                                      padding: 16,
+                                      position: 'relative',
+                                      padding: '15px',
                                       margin: "0 0 8px 0",
                                       minHeight: "50px",
+                                      boxShadow: '0 1px 4px 0 rgba(192, 208, 230, 0.8)',
+                                      borderTop: ' 20px solid rgba(230, 236, 245, 0.4)',
                                       backgroundColor: snapshot.isDragging
                                         ? "#22465a"
                                         : "#4d90b8",
@@ -129,6 +116,8 @@ const Board = () => {
                                       ...provided.draggableProps.style,
                                     }}
                                   >
+                                    {item.labels.map(label => <Label key={label} color={label} />)}
+                                    <br />
                                     {item.content}
                                   </div>
                                 );
@@ -141,12 +130,14 @@ const Board = () => {
                     );
                   }}
                 </Droppable>
+                <br />
+                <Button >+ Adicionar novo cartão </Button>
               </div>
-            </div>
+            </div >
           );
         })}
-      </DragDropContext>
-    </Box>
+      </DragDropContext >
+      <Button >+ Adicionar nova lista </Button>
+    </div >
   );
 };
-export default Board;
