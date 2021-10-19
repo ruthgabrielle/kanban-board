@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { loadLists } from "../../services/api";
-import { Label, Button } from "./styles";
+import { BoardContainer, Button, Container, Content, Label, ListContainer } from "./styles";
 
 const lists = loadLists();
 
@@ -46,43 +46,25 @@ export default function Board() {
   const [columns, setColumns] = useState(lists);
 
   return (
-    <div style={{
-      display: 'flex',
-      padding: '30px 0',
-      justifyContent: 'center',
-      height: '100%'
-    }}
-    >
+    <Container>
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       >
         {Object.entries(columns).map(([columnId, column]) => {
           return (
-            <div style={{
-              padding: ' 0 15px',
-              height: '100%',
-              flex: '0 0 320px'
-            }}
+            <BoardContainer
             >
-              <p style={{
-                fontWeight: '500',
-                lineHeight: ' 20px'
-              }}>{column.title}</p>
               <div style={{ margin: 8 }}>
+                <header>
+                  <h2>{column.title}</h2>
+                </header>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
                     return (
-                      <div
+                      <ListContainer
                         {...provided.droppableProps}
                         ref={provided.innerRef}
-                        style={{
-                          background: snapshot.isDraggingOver
-                            ? "lightgrey"
-                            : "transparent",
-                          padding: 4,
-                          width: 250,
-                          minHeight: 500,
-                        }}
+
                       >
                         {column.cards.map((item, index) => {
                           return (
@@ -93,30 +75,17 @@ export default function Board() {
                             >
                               {(provided, snapshot) => {
                                 return (
-                                  <div
+                                  <Content
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{
-                                      userSelect: "none",
-                                      position: 'relative',
-                                      padding: '15px',
-                                      margin: "0 0 8px 0",
-                                      minHeight: "50px",
-                                      boxShadow: '0 1px 4px 0 rgba(192, 208, 230, 0.8)',
-                                      borderTop: ' 20px solid rgba(230, 236, 245, 0.4)',
-                                      backgroundColor: '#FFF',
-                                      "&:hover": {
-                                        backgroundColor: "#54A0C9",
-                                        opacity: [0.9, 0.8, 0.7],
-                                      },
                                       ...provided.draggableProps.style,
                                     }}
                                   >
                                     {item.labels.map(label => <Label key={label} color={label} />)}
-                                    <br />
-                                    {item.content}
-                                  </div>
+                                    <div><p> {item.content} </p></div>
+                                  </Content>
                                 );
                               }}
                             </Draggable>
@@ -124,17 +93,18 @@ export default function Board() {
                         })}
                         {provided.placeholder}
                         <Button >+ Adicionar novo cartão </Button>
-                      </div>
+                      </ListContainer>
                     );
                   }}
                 </Droppable>
                 <br />
               </div>
-            </div >
+
+            </BoardContainer >
           );
         })}
       </DragDropContext >
-      <Button >+ Adicionar nova lista </Button>
-    </div >
+      <Button style={{ marginTop: '40px' }} >+ Adicionar nova lista </Button>
+    </Container >
   );
 };
