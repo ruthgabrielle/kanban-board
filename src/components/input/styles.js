@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 
 export const Button = styled.button`
-  background-color: #59D090;
+  background-color: #5aac44;
   margin: 10px 10px 10px 0px;
-  width: 180px;
-  height: 20px;
+  width: 120px;
+  height: 30px;
   border: 0;
-  color: #333;
-  border-radius: 15px;
+  border-radius: 7px;
+  color: #FFFF;
+  text-align: left;
+  padding-left: 10px;
 
   &:hover{
-  background-color: rgb(89, 208, 144, 0.4);
+  background-color: rgb(90, 172, 68, 0.7);
   opacity: 0.9, 0.8, 0.7;
   }
    

@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { loadLists } from "../../services/api";
 import InputContainer from "../input/inputContainer";
-import { BoardContainer, Button, Container, Content, Label, ListContainer } from "./styles";
+import {
+  BoardContainer,
+  Button,
+  Container,
+  Content,
+  Label,
+  ListContainer,
+} from "./styles";
 
 const lists = loadLists();
 
@@ -53,8 +60,7 @@ export default function Board() {
       >
         {Object.entries(columns).map(([columnId, column]) => {
           return (
-            <BoardContainer
-            >
+            <BoardContainer>
               <div style={{ margin: 8 }}>
                 <header>
                   <h2>{column.title}</h2>
@@ -65,7 +71,6 @@ export default function Board() {
                       <ListContainer
                         {...provided.droppableProps}
                         ref={provided.innerRef}
-
                       >
                         {column.cards.map((item, index) => {
                           return (
@@ -84,8 +89,12 @@ export default function Board() {
                                       ...provided.draggableProps.style,
                                     }}
                                   >
-                                    {item.labels.map(label => <Label key={label} color={label} />)}
-                                    <div><p> {item.content} </p></div>
+                                    {item.labels.map((label) => (
+                                      <Label key={label} color={label} />
+                                    ))}
+                                    <div>
+                                      <p> {item.content} </p>
+                                    </div>
                                   </Content>
                                 );
                               }}
@@ -100,12 +109,11 @@ export default function Board() {
                 </Droppable>
                 <br />
               </div>
-
-            </BoardContainer >
+            </BoardContainer>
           );
         })}
-      </DragDropContext >
-      <Button style={{ marginTop: '40px' }} >+ Adicionar nova lista </Button>
-    </Container >
+      </DragDropContext>
+      <Button style={{ marginTop: "40px" }}>+ Adicionar nova lista </Button>
+    </Container>
   );
-};
+}
