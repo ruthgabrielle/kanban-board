@@ -1,7 +1,20 @@
 import { Button, Container, Input, InputPaper } from "./styles";
 import { MdClear } from "react-icons/md";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import cardsApi from "../../services/cardsApi";
 export default function InputCard({ setShowCard }) {
+  const [content, setContent] = useState("");
+
+  const { addMoreCard } = useContext(cardsApi);
+  const handleChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleConfirm = () => {
+    addMoreCard(content);
+    setShowCard(false)
+  };
+
   return (
     <div>
       <Container>
@@ -10,11 +23,13 @@ export default function InputCard({ setShowCard }) {
             type="text"
             placeholder="Digite o conteúdo da tarefa"
             onBlur={() => setShowCard(false)}
+            onChange={handleChange}
+            value={content}
           />
         </InputPaper>
       </Container>
       <div>
-        <Button> Adicionar cartão </Button>
+        <Button onClick={handleConfirm}> Adicionar cartão </Button>
         <MdClear onClick={() => setShowCard(false)} />
       </div>
     </div>
