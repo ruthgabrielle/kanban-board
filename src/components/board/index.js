@@ -4,13 +4,13 @@ import { loadLists } from "../../services/api";
 import InputContainer from "../input/inputContainer";
 import {
   BoardContainer,
-  Button,
   Container,
   Content,
   Label,
   ListContainer,
 } from "./styles";
-
+import CardsApi from '../../services/cardsApi'
+import {v4 as uuid} from "uuid"
 const lists = loadLists();
 
 const onDragEnd = (result, columns, setColumns) => {
@@ -54,7 +54,28 @@ const onDragEnd = (result, columns, setColumns) => {
 export default function Board() {
   const [columns, setColumns] = useState(lists);
 
+  const addMoreCard = (content, cardId) => {
+    const newCardId = uuid()
+    console.logn(newCardId)
+    const newCard = {
+      id: newCardId, 
+      content,
+    }
+    const list = columns.cards[cardId];
+    list.cards = [...list.cards, newCard]
+
+    const newState = {
+      ...DataTransfer,
+      lists: {
+        ...columns.list,
+        [cardId]: list
+      }
+    }
+    setColumns(newState)
+  }
+
   return (
+    <CardsApi.Provider value={{addMoreCard}}>
     <Container>
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
@@ -103,7 +124,7 @@ export default function Board() {
                           );
                         })}
                         {provided.placeholder}
-                        <InputContainer />
+                        <InputContainer columnId={columnId}/>
                       </ListContainer>
                     );
                   }}
@@ -114,7 +135,7 @@ export default function Board() {
           );
         })}
       </DragDropContext>
-      <Button style={{ marginTop: "40px" }}>+ Adicionar nova lista </Button>
     </Container>
+    </CardsApi.Provider>
   );
 }

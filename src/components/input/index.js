@@ -2,16 +2,18 @@ import { Button, Container, Input, InputPaper } from "./styles";
 import { MdClear } from "react-icons/md";
 import { useContext, useState } from "react";
 import cardsApi from "../../services/cardsApi";
-export default function InputCard({ setShowCard }) {
-  const [content, setContent] = useState("");
+
+export default function InputCard({ setShowCard, columnId }) {
+  const [content, setContent] = useState('');
 
   const { addMoreCard } = useContext(cardsApi);
+
   const handleChange = (e) => {
     setContent(e.target.value);
   };
 
   const handleConfirm = () => {
-    addMoreCard(content);
+    addMoreCard(content, columnId)
     setShowCard(false)
   };
 

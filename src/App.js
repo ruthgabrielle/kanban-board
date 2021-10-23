@@ -1,17 +1,12 @@
 import KanbanBoard from "./pages/kanbanBoard";
-import GlobalStyle from './styles/global';
-import CardsApi from './services/cardsApi'
+import GlobalStyle from "./styles/global";
 function App() {
 
-  const addMoreCard = (content) => {
-    console.log(content)
-  }
-  
   return (
-    <CardsApi.Provider value={addMoreCard}>
+    <div>
       <KanbanBoard />
       <GlobalStyle />
-    </CardsApi.Provider>
+    </div>
   );
 }
 
