@@ -56,7 +56,7 @@ export default function Board() {
 
   const addMoreCard = (content, cardId) => {
     const newCardId = uuid()
-    console.logn(newCardId)
+    console.log(newCardId)
     const newCard = {
       id: newCardId, 
       content,

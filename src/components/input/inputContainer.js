@@ -6,10 +6,10 @@ export default function InputContainer({ columnId }) {
 
   return (
     <div>
-      {!!showCard && (
+      {!showCard && (
         <InputCard setShowCard={setShowCard} columnId={columnId} />
       )}
-      <Paper onClick={() => setShowCard(true)}>
+      <Paper onClick={() => setShowCard(!showCard)}>
         <p> + Adicionar novo cartão </p>
       </Paper>
     </div>
