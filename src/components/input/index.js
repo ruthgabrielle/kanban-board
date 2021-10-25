@@ -1,10 +1,10 @@
-import { Button, Container, Input, InputPaper } from "./styles";
+import { Button, Container, Input, InputPaper, Select } from "./styles";
 import { MdClear } from "react-icons/md";
 import { useContext, useState } from "react";
 import cardsApi from "../../services/cardsApi";
 
 export default function InputCard({ setShowCard, columnId }) {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
 
   const { addMoreCard } = useContext(cardsApi);
 
@@ -13,9 +13,9 @@ export default function InputCard({ setShowCard, columnId }) {
   };
 
   const handleConfirm = () => {
-    addMoreCard(content, columnId)
-    console.log(columnId)
-    setShowCard(false)
+    addMoreCard(content, columnId);
+    console.log(columnId);
+    setShowCard(false);
   };
 
   return (
@@ -29,6 +29,13 @@ export default function InputCard({ setShowCard, columnId }) {
             onChange={handleChange}
             value={content}
           />
+          <Select placeholder="Selecione a prioridade">
+            <option value="#5CC4FF"> ALTA</option>
+            <option value="#945AD1" selected>
+              NORMAL
+            </option>
+            <option value="#59D090">BAIXA</option>
+          </Select>
         </InputPaper>
       </Container>
       <div>

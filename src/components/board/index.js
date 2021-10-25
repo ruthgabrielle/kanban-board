@@ -53,33 +53,34 @@ const onDragEnd = (result, columns, setColumns) => {
 export default function Board() {
   const [columns, setColumns] = useState(lists);
 
-  const addMoreCard = (content, cardId) => {
+  const addMoreCard = (content, columnId) => {
     const newCardId = uuid();
-
-    console.log(content, cardId);
-    console.log(newCardId);
 
     const newCard = {
       id: newCardId,
       content,
     };
 
-    const list = columns.map((column) => {
+    const cards = columns.map((column) => {
       return column.cards;
-    });
+    })
 
-    const card = list.map((item) => {
-      console.log(item.content);
-      return item.content;
-    });
+    console.log(cards);
 
-    console.log(list, card);
+    let list = cards[columnId]
 
-    const newCardValue = [...card, newCard];
+    console.log(list)
+    
+    list = [...list, newCard]
 
     const newState = {
-      ...card,
-      [cardId]: newCardValue,
+      ...columns,
+      cards: [
+        {
+          ...columns.cards,
+          [columnId]: list,
+        },
+      ],
     };
 
     console.log(newState);

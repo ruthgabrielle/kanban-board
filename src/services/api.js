@@ -31,7 +31,6 @@ export function loadLists() {
         {
             title: 'In Progress',
             id: '2',
-
             creatable: true,
             cards: [
                 {

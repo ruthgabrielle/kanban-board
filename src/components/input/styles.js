@@ -38,7 +38,6 @@ export const InputPaper = styled.div`
   border: 0;
   padding-top: 20px;
 `
-
 export const Input = styled.input`
   width: 300px;
   height: 50px;
@@ -49,6 +48,21 @@ export const Input = styled.input`
   }
 
 `
+
+export const Select = styled.select`
+  width: 300px ;
+  border: 0;
+  text-align: center;
+  font-size: 15px;
+` 
+export const Label = styled.span`
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+  background: ${props => props.color};
+`;
+
 
 export const Container = styled.div`
 
