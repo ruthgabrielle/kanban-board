@@ -13,9 +13,8 @@ export default function InputCard({ setShowCard, columnId }) {
   };
 
   const handleConfirm = () => {
-    console.log(content)
-    console.log(columnId)
     addMoreCard(content, columnId)
+    console.log(columnId)
     setShowCard(false)
   };
 

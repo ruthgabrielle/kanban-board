@@ -2,7 +2,7 @@ import { useState } from "react";
 import InputCard from ".";
 import { Paper } from "./styles";
 export default function InputContainer({ columnId }) {
-  const [showCard, setShowCard] = useState(false);
+  const [showCard, setShowCard] = useState(true);
 
   return (
     <div>
